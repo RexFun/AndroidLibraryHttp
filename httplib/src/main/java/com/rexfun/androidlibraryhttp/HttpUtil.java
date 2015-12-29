@@ -16,6 +16,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -60,8 +61,16 @@ public class HttpUtil
 			}
 			else if(method.equals("GET"))
 			{
+				String url = actionObj.getUrl();
 				//初始化HttpGet
-				HttpGet req = new HttpGet(actionObj.getUrl());
+				for (int i=0; i<actionObj.getParams().size(); i++)
+				{
+					if (i==0)
+						url += "?" + actionObj.getParams().get(i).getName() + "=" + actionObj.getParams().get(i).getValue();
+					else
+						url += "&" + actionObj.getParams().get(i).getName() + "=" + actionObj.getParams().get(i).getValue();
+				}
+				HttpGet req = new HttpGet(url);
 				//执行请求
 				resp = client.execute(req);
 			}
