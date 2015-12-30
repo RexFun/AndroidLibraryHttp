@@ -28,7 +28,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                 m.put("rownum", "0");
                 m.put("pagesize", "5");
                 Log.i("请求前", "");
-                HttpActionObj actionObj = new HttpActionObj("http://192.168.19.123:8181/paper/client/papermodel/getByPid.action", m);
+                HttpActionObj actionObj = new HttpActionObj("http://192.168.19.123:8181/paper/client/papermodel/getPageByPid.action", m);
                 HttpResultObj<String> r = HttpUtil.submitHttpAction(actionObj, String.class, 5000, 5000, "GET");
                 Log.i("请求成功", r.isSuc() + "");
                 if(r.isSuc()) {
