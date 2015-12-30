@@ -41,7 +41,7 @@ public class HttpUtil
 	@SuppressWarnings("unchecked")
 	public static <T> HttpResultObj<T> submitHttpAction(HttpActionObj actionObj, Class<T> clazz, int connectionTimeout, int soTimeout, String method)
 	{
-		Log.i("<* http url *>", actionObj.getUrl());
+		Log.i("<* Request URL *>", actionObj.getUrl());
 		HttpResultObj<T> o = new HttpResultObj<T>();
 		try
 		{
@@ -49,10 +49,12 @@ public class HttpUtil
 			HttpClient client =  new DefaultHttpClient();
 			HttpConnectionParams.setConnectionTimeout(client.getParams(), connectionTimeout);//连接建立的超时时间
 			HttpConnectionParams.setSoTimeout(client.getParams(), soTimeout);//连接建立后，没有收到response的超时时间
+			Log.i("<* Request PARAMS *>", client.getParams().toString());
 			//发送请求
 			HttpResponse resp = null;
 			if(method.equals("POST"))
 			{
+				Log.i("<* Request METHOD *>", "POST");
 				//初始化HttpPost
 				HttpPost req = new HttpPost(actionObj.getUrl());
 				req.setEntity(new UrlEncodedFormEntity(actionObj.getParams(), HTTP.UTF_8));
@@ -61,6 +63,7 @@ public class HttpUtil
 			}
 			else if(method.equals("GET"))
 			{
+				Log.i("<* Request METHOD *>", "GET");
 				String url = actionObj.getUrl();
 				//初始化HttpGet
 				for (int i=0; i<actionObj.getParams().size(); i++)
@@ -70,6 +73,7 @@ public class HttpUtil
 					else
 						url += "&" + actionObj.getParams().get(i).getName() + "=" + actionObj.getParams().get(i).getValue();
 				}
+				Log.i("<* Request METHOD 'GET' URL *>", url);
 				HttpGet req = new HttpGet(url);
 				//执行请求
 				resp = client.execute(req);
