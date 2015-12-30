@@ -16,13 +16,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
@@ -49,7 +49,10 @@ public class HttpUtil
 			HttpClient client =  new DefaultHttpClient();
 			HttpConnectionParams.setConnectionTimeout(client.getParams(), connectionTimeout);//连接建立的超时时间
 			HttpConnectionParams.setSoTimeout(client.getParams(), soTimeout);//连接建立后，没有收到response的超时时间
-			Log.i("<* Request PARAMS *>", client.getParams().toString());
+			int k = 0;
+			for (Map.Entry<String, String> entry : actionObj.getParamsMap().entrySet()) {
+				Log.i("<* Request PARAMS ["+(k++)+"] *>", entry.getKey() + " = " + entry.getValue());
+			}
 			//发送请求
 			HttpResponse resp = null;
 			if(method.equals("POST"))
