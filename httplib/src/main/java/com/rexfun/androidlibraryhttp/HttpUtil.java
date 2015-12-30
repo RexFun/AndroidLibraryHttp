@@ -73,7 +73,7 @@ public class HttpUtil
 					else
 						url += "&" + actionObj.getParams().get(i).getName() + "=" + actionObj.getParams().get(i).getValue();
 				}
-				Log.i("<* Request METHOD 'GET' URL *>", url);
+				Log.i("<* Request 'GET' URL *>", url);
 				HttpGet req = new HttpGet(url);
 				//执行请求
 				resp = client.execute(req);
